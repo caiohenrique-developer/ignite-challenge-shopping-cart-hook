@@ -23,25 +23,29 @@ interface CartItemsAmount {
 
 const Home = (): JSX.Element => {
   const [products, setProducts] = useState<ProductFormatted[]>([]);
-  // const { addProduct, cart } = useCart();
+  const { addProduct, cart } = useCart();
 
-  // const cartItemsAmount = cart.reduce((sumAmount, product) => {
-  //   // TODO
-  // }, {} as CartItemsAmount)
+  const cartItemsAmount = cart.reduce((sumAmount, product) => {
+    const newSumAmount = { ...sumAmount }
+    newSumAmount[product.id] = product.amount;
+
+    return newSumAmount;
+  }, {} as CartItemsAmount)
 
   useEffect(() => {
     async function loadProducts() {
-      const { data } = await api.get('products');
+      const { data } = await api.get<Product[]>('products');
 
-      setProducts(data);
-      console.log(data);
+      const productsArray = data.map((data) => ({ ...data, priceFormatted: formatPrice(data.price) }));
+
+      setProducts(productsArray);
     }
 
     loadProducts();
   }, []);
 
   function handleAddProduct(id: number) {
-    // TODO
+    addProduct(id);
   }
 
   return (
@@ -51,15 +55,15 @@ const Home = (): JSX.Element => {
           <li key={id}>
             <img src={image} alt={title} />
             <strong>{title}</strong>
-            <span>{formatPrice(price)}</span>
+            <span>{priceFormatted}</span>
             <button
               type="button"
               data-testid="add-product-button"
-            // onClick={() => handleAddProduct(product.id)}
+              onClick={() => handleAddProduct(id)}
             >
               <div data-testid="cart-product-quantity">
                 <MdAddShoppingCart size={16} color="#FFF" />
-                {/* {cartItemsAmount[product.id] || 0} */} 2
+                {cartItemsAmount[id] || 0}
               </div>
 
               <span>ADICIONAR AO CARRINHO</span>
