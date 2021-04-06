@@ -58,7 +58,7 @@ const Cart = (): JSX.Element => {
         </thead>
         <tbody>
           {
-            cartFormatted.map(({ id, title, price, image, amount, priceFormatted }) => (
+            cartFormatted.map(({ id, title, price, image, amount, priceFormatted, subTotal }) => (
               <tr key={id} data-testid="product">
                 <td>
                   <img src={image} alt={title} />
@@ -93,7 +93,7 @@ const Cart = (): JSX.Element => {
                   </div>
                 </td>
                 <td>
-                  <strong>{priceFormatted}</strong>
+                  <strong>{subTotal}</strong>
                 </td>
                 <td>
                   <button
