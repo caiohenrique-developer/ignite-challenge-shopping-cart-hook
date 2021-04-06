@@ -51,7 +51,7 @@ const Home = (): JSX.Element => {
   return (
     <ProductList>
       {
-        products.map(({ id, title, image, price, priceFormatted }) => (
+        products.map(({ id, title, image, priceFormatted }) => (
           <li key={id}>
             <img src={image} alt={title} />
             <strong>{title}</strong>

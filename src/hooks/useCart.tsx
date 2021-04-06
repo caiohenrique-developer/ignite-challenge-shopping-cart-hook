@@ -37,7 +37,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       const updatedCart = [...cart];
       const existsProduct = updatedCart.find((product) => product.id === productId);
       
-      const stock = await api.get(`strock/${productId}`);
+      const stock = await api.get(`stock/${productId}`);
       const stockAmount = stock.data.amount;
       const currentAmount = existsProduct ? existsProduct.amount : 0;
       const amount = currentAmount + 1;
